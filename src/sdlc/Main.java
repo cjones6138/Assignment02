@@ -4,12 +4,37 @@ import java.io.*;
 import java.util.*;
 import java.util.Map.Entry;
 
-public class assignment02 {
+public class Main {
 
 	public static void main(String[] args) throws IOException {
 
+		// read poem from file to list
+		File file = new File("TheRavenPoemWithHTMLTags.txt");
+		List<String> poemList = readPoem(file);
+		
+		// create Map to store words and count of how many times the words appear
+		Map<String, Integer> mapUniqueWordsAndCount = uniqueWords(poemList);
+				
+		// establish sorted List of unique words with count
+		List<Entry<String, Integer>> listSortedUniqueWordsAndCount = sortMapUniqueWords(mapUniqueWordsAndCount);
+		
+		// user input to find n top words
+		try (Scanner scanner = new Scanner(System.in)) {
+			System.out.printf("What size list? ");
+			int topWords = scanner.nextInt();
+			
+			// print n top words by line
+			System.out.println("\nList of top " + topWords + " most reoccuring words in the poem:\n");
+			listSortedUniqueWordsAndCount.subList(0, topWords).forEach(System.out::println);			
+		}
+		
+
+	}
+	
+	public static List<String> readPoem(File file) throws IOException {
+		
 		// read in txt document
-		BufferedReader br = new BufferedReader(new FileReader("TheRavenPoemWithHTMLTags.txt"));
+		BufferedReader br = new BufferedReader(new FileReader(file));
 		
 		// create variable to read line
 		String line = null;
@@ -64,6 +89,11 @@ public class assignment02 {
 		
 		// establish poemList to take poem in as List
 		List<String> poemList = Arrays.asList(poem.toUpperCase().split("\\s+"));
+		return poemList;
+		
+	}
+	
+	public static Map<String, Integer> uniqueWords(List<String> poemList) {
 		
 		// create List to store unique words
 		List<String> uniqueWordList = new ArrayList<String>();
@@ -77,7 +107,7 @@ public class assignment02 {
 				uniqueWordList.add(temp);
 			}
 		}
-		
+
 		// create Map to store words and count of how many times the words appear
 		Map<String, Integer> mapUniqueWordsAndCount = new TreeMap<>(Collections.reverseOrder());
 		
@@ -99,23 +129,17 @@ public class assignment02 {
 			
 			// store unique words and how many times they appear in the document as key and value
 			mapUniqueWordsAndCount.put(uniqueWord, count);			
-		}		
+		}
+		return mapUniqueWordsAndCount;	
+	}
+	
+	public static List<Entry<String, Integer>> sortMapUniqueWords(Map<String, Integer> mapUniqueWordsAndCount)	{
 		
 		// establish sorted List of unique words with count
 		List<Entry<String, Integer>> listSortedUniqueWordsAndCount = new ArrayList<>(mapUniqueWordsAndCount.entrySet());
 		listSortedUniqueWordsAndCount.sort(Entry.comparingByValue(Comparator.reverseOrder()));
+		return listSortedUniqueWordsAndCount;
 		
-		// user input to find n top words
-		try (Scanner scanner = new Scanner(System.in)) {
-			System.out.printf("What size list? ");
-			int topWords = scanner.nextInt();
-			
-			// print n top words by line
-			System.out.println("\nList of top " + topWords + " most reoccuring words in the poem:\n");
-			listSortedUniqueWordsAndCount.subList(0, topWords).forEach(System.out::println);			
-		}
-		
-
 	}
 
 }
