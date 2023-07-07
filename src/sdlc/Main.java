@@ -6,6 +6,20 @@ import java.util.Map.Entry;
 
 public class Main {
 
+	/**
+	 * Main method.
+	 * Instantiate File object with file name.
+	 * Instantiate List object using readPoem method to parse poem from file.
+	 * 
+	 * Instantiate Map object using uniqueWords method to parse Key of unique words with Value of number unique words occur in poem.
+	 * 
+	 * Instantiate List object using sortMapUniqueWords method to sort unique words descending from most frequent.
+	 * 
+	 * Ask user what size list to console log list at that size.
+	 * 
+	 * @param args
+	 * @throws IOException
+	 */
 	public static void main(String[] args) throws IOException {
 
 		// read poem from file to list
@@ -31,6 +45,16 @@ public class Main {
 
 	}
 	
+	/**
+	 * Read poem method.
+	 * 
+	 * Takes in File object and returns List object.
+	 * 	List will contain only the poem in all caps and no punctuation.
+	 * 
+	 * @param File
+	 * @return List
+	 * @throws IOException
+	 */
 	public static List<String> readPoem(File file) throws IOException {
 		
 		// read in txt document
@@ -93,6 +117,17 @@ public class Main {
 		
 	}
 	
+	/**
+	 * Unique words method.
+	 * 
+	 * Takes in List object and returns Map object.
+	 * 	Key : Unique Words.
+	 * 	Value : Unique Word Occurrence.
+	 * 
+	 * @param List
+	 * @return Map
+	 */
+	
 	public static Map<String, Integer> uniqueWords(List<String> poemList) {
 		
 		// create List to store unique words
@@ -132,6 +167,18 @@ public class Main {
 		}
 		return mapUniqueWordsAndCount;	
 	}
+	
+	/**
+	 * Sort Map by Unique Words method.
+	 * 
+	 * Take in Map object and return List object.
+	 * 	List will contain Key and Value in order by Value.
+	 * 	Key: Unique Words.
+	 * 	Value : Unique Words Occurrence.
+	 * 
+	 * @param Map
+	 * @return List
+	 */
 	
 	public static List<Entry<String, Integer>> sortMapUniqueWords(Map<String, Integer> mapUniqueWordsAndCount)	{
 		
